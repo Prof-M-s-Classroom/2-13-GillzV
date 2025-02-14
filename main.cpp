@@ -66,16 +66,71 @@ public:
         length--;
     }
 
+    Node <T>* get(int index)
+    {
+        if (index < 0|| index >= length)
+            return nullptr;
+        Node<T> *temp = head;
+        for (int i = 0; i < index; i++)
+        {
+            temp = temp->next;
+        }
+    }
+
     void deleteNode(int index) {
        //TODO:Write the function to delete at the given index. Reuse the pre-written functions for edge cases. Account for missing index.
-    }
+        void deleteNode(int index)
+        {
+            if (index < 0 || index >= length)
+                return;
+            if (index == 0)
+                return deleteFirst();
+            if (index == length - 1)
+                return deleteLast();
+
+            Node<T> *prev = get(index - 1);
+            Node<T> *temp = prev->next;
+
+            prev->next = temp->next;
+            delete temp;
+            length--;
+        }
+
 
    void insert(int index, T *value) {
         //TODO:Write a function to insert a new node at a give index. Reuse the pre-written functions for edge cases. Account for missing index
+        void insert(int index, T* value)
+        {
+            if (index < 0 || index >= length)
+            {
+                cout << "Index is out of bounds." << endl;
+            }
+            if (index == 0)
+            {
+                addhead (value);
+            }
+            if (index == length)
+            {
+                add(value);
+            }
+            else
+            {
+                Node<T> *newNode = new Node<T>(value);
+                Node<T> *temp = get(index - 1);
+                newNode->next = temp->next;
+                temp->next = newNode;
+                length++;
+            }
     }
 
    void reverselist(){
         //TODO:Write a function to reverse the list using the logic from the slide.
+        void reverse(Node<T> *temp){
+         Node<T> *temp2 = temp->next;
+
+
+        }
+
     }
 
     void print() {
