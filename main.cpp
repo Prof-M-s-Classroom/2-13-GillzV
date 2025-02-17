@@ -59,34 +59,51 @@ public:
     }
 
     void dellast() {
-        Node<T> *temp = head;
-        while (temp->next!=NULL)
-            temp = temp->next;
-        delete temp;
+        if (head == NULL) return;
+        if (head->next == NULL)
+        {
+            delete head;
+            head = NULL;
+        } else {
+            Node<T> *temp = head;
+            while (temp->next && temp->next->next != NULL)
+            {
+                temp = temp->next;
+            }
+            delete temp->next;
+            temp->next = NULL;
+        }
         length--;
     }
 
-    Node <T>* get(int index)
-    {
-        if (index < 0|| index >= length)
+
+    Node<T>* get(int index) {
+        if (index < 0 || index >= length)
             return nullptr;
         Node<T> *temp = head;
-        for (int i = 0; i < index; i++)
-        {
+        for (int i = 0; i < index; i++) {
             temp = temp->next;
         }
+        return temp;
     }
 
-    void deleteNode(int index) {
+
+
        //TODO:Write the function to delete at the given index. Reuse the pre-written functions for edge cases. Account for missing index.
         void deleteNode(int index)
         {
             if (index < 0 || index >= length)
                 return;
             if (index == 0)
-                return deleteFirst();
+            {
+                delfirst();
+                return;
+            }
             if (index == length - 1)
-                return deleteLast();
+            {
+                dellast();
+                return;
+            }
 
             Node<T> *prev = get(index - 1);
             Node<T> *temp = prev->next;
@@ -97,50 +114,47 @@ public:
         }
 
 
-   void insert(int index, T *value) {
+
+
         //TODO:Write a function to insert a new node at a give index. Reuse the pre-written functions for edge cases. Account for missing index
-        void insert(int index, T* value)
-        {
-            if (index < 0 || index >= length)
-            {
-                cout << "Index is out of bounds." << endl;
-            }
-            if (index == 0)
-            {
-                addhead (value);
-            }
-            if (index == length)
-            {
-                add(value);
-            }
-            else
-            {
+            void insert(int index, T *value) {
+                if (index < 0 || index > length) {
+                    cout << "Index is out of bounds." << endl;
+                    return;
+                }
+                if (index == 0) {
+                    addhead(value);
+                    return;
+                }
+                if (index == length) {
+                    add(value);
+                    return;
+                }
+
                 Node<T> *newNode = new Node<T>(value);
                 Node<T> *temp = get(index - 1);
                 newNode->next = temp->next;
                 temp->next = newNode;
                 length++;
             }
-    }
 
-   void reverselist(){
+
         //TODO:Write a function to reverse the list using the logic from the slide.
-        void reverse()
-        {
-            if (head->next == NULL)
-                return;
+        void reverselist() {
+        if (head == NULL || head->next == NULL)
+            return;
 
+        Node<T> *prev = NULL;
+        Node<T> *current = head;
+        Node<T> *next = NULL;
 
-
-            Node<T> *temp = head->next;
-
-            while (current != NULL)
-            {
-                next = current -> next;
-
-
-            }
+        while (current != NULL) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
         }
+        head = prev;
     }
 
     void print() {
